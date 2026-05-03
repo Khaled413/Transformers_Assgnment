@@ -1,0 +1,45 @@
+# Implementation of Self-Attention Mechanism from Scratch
+
+## Academic Context
+* **Course:** Deep Learning
+* **Student Name:** Khaled Ali Eleraky
+* **Academic Year:** 2025/2026
+
+## Abstract
+This repository contains a low-level Python implementation of the Scaled Dot-Product Self-Attention mechanism, the foundational building block of modern Transformer architectures. The code demonstrates the mathematical operations involved in computing attention weights for a given sequence of tokens without relying on high-level deep learning frameworks (like PyTorch or TensorFlow) for the core logic, utilizing purely NumPy for matrix multiplications.
+
+## Theoretical Background
+The self-attention mechanism allows a model to weigh the importance of different words in a sequence relative to each other. The operation is defined mathematically as:
+
+$$Attention(Q, K, V) = softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+
+Where:
+* $Q$ (Queries): Represents the current token seeking information.
+* $K$ (Keys): Represents the tokens being queried.
+* $V$ (Values): Represents the actual content of the tokens.
+* $d_k$: The dimension of the key vectors, used as a scaling factor to stabilize gradients during softmax computation.
+
+## Implementation Details
+The Jupyter Notebook (`Untitled7.ipynb`) executes the following pipeline:
+
+1. **Sequence Tokenization:** A sample query ("What are the symptoms of diabetes?") is processed and tokenized into $n$ distinct words.
+2. **Embedding Initialization:** Simulates an embedding layer by generating random continuous vector representations $X \in \mathbb{R}^{n \times d_{model}}$ where $d_{model} = 64$.
+3. **Linear Transformations:** Generates Query, Key, and Value matrices by multiplying the input embeddings with randomly initialized weight matrices ($W^Q, W^K, W^V$).
+4. **Attention Scoring:** Computes the raw attention scores via $QK^T$, scales them down by $\sqrt{d_k}$, and applies a computationally stable Softmax function to yield probabilities (attention weights).
+5. **Context Vector Computation:** Multiplies the attention weights by the Value matrix $V$ to produce the final attention output.
+6. **Visualization:** Generates a heatmap using `matplotlib` to visually interpret how each query token attends to every key token in the sequence.
+
+## Dependencies
+To execute this notebook, the following Python libraries are required:
+* `numpy` (for matrix operations and mathematical functions)
+* `matplotlib` (for generating the attention weight heatmap)
+
+## Execution Instructions
+1. Ensure a Python 3 environment is active with the required dependencies installed.
+2. Open the notebook `Untitled7.ipynb` using Jupyter Notebook, JupyterLab, or Google Colab.
+3. Run the cells sequentially. 
+4. The final cell will generate an `attention_heatmap.png` file in the working directory, mapping the self-attention weights between the tokens.
+
+## Expected Outputs
+* **Matrix Shapes:** Console outputs verifying the dimensional integrity of the embeddings ($6 \times 64$), raw scores ($6 \times 6$), attention weights ($6 \times 6$), and the final context output ($6 \times 64$).
+* **Attention Heatmap:** A visual matrix showing the probability distribution of attention across the sentence tokens, demonstrating the self-referential focus of the mechanism.
